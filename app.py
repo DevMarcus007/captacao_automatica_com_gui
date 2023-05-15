@@ -158,6 +158,9 @@ class Application(tk.Frame):
             print(f"Hora de início: {hora_inicio.strftime('%H:%M:%S')}")
             print(f"Hora de término: {hora_fim.strftime('%H:%M:%S')}")
             print(f"Rampas selecionadas: {rampas}")
+            cap_aut(selected_date, hora_inicio, hora_fim, rampas)
+            erro("Aplicação Finalizada")
+            
 
 
        
