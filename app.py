@@ -6,7 +6,6 @@ from config import *
 
 
 
-
 class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
@@ -20,13 +19,13 @@ class Application(tk.Frame):
     def create_widgets(self):
 
           # Carrega a imagem da logo
-        image = Image.open("logo.webp").convert("RGBA")
-        image = image.resize((300, 100), Image.ANTIALIAS)
-        self.logo = ImageTk.PhotoImage(image)
+        #image = Image.open("./logo.webp").convert("RGBA")
+        #image = image.resize((300, 100), Image.ANTIALIAS)
+        #self.logo = ImageTk.PhotoImage(image)
 
         # Cria um label para exibir a imagem da logo
-        self.logo_label = tk.Label(self, image=self.logo, highlightthickness=0)
-        self.logo_label.grid(row=0, column=2, columnspan=5)
+        #self.logo_label = tk.Label(self, image=self.logo, highlightthickness=0)
+        #self.logo_label.grid(row=0, column=2, columnspan=5)
 
 
         # Cria um label Titulo
@@ -138,8 +137,8 @@ class Application(tk.Frame):
             erro("Verifique o formato da Hora Fim (HH:MM)")
 
         data = datetime.strptime(selected_date, '%d/%m/%Y').date()
-        hora_inicio = datetime.combine(data, datetime.strptime(start_time, "%H:%M").time())
-        hora_fim = datetime.combine(data, datetime.strptime(end_time, "%H:%M").time())
+        hora_inicio = datetime.combine(data, time.fromisoformat(start_time))
+        hora_fim = datetime.combine(data, time.fromisoformat(end_time))
         limite_mis = timedelta(hours=4)
 
         if len(rampas) < 1:
