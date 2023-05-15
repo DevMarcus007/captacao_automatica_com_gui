@@ -2,6 +2,8 @@ import tkinter as tk
 from tkcalendar import Calendar
 from datetime import datetime, time, timedelta
 from PIL import Image, ImageTk
+from config import *
+
 
 
 
@@ -136,8 +138,8 @@ class Application(tk.Frame):
             erro("Verifique o formato da Hora Fim (HH:MM)")
 
         data = datetime.strptime(selected_date, '%d/%m/%Y').date()
-        hora_inicio = datetime.combine(data, time.fromisoformat(start_time))
-        hora_fim = datetime.combine(data, time.fromisoformat(end_time))
+        hora_inicio = datetime.combine(data, datetime.strptime(start_time, "%H:%M").time())
+        hora_fim = datetime.combine(data, datetime.strptime(end_time, "%H:%M").time())
         limite_mis = timedelta(hours=4)
 
         if len(rampas) < 1:
