@@ -1,0 +1,7 @@
+#Ignora os arquivos de configuração com informações sensíveis
+*config.txt
+*config.py
+
+#Ignora a pasta do ambiente virtual
+app_cap_aut_env
+__pycache__

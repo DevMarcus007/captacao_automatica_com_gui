@@ -2,9 +2,8 @@ import tkinter as tk
 from tkcalendar import Calendar
 from datetime import datetime, time, timedelta
 from PIL import Image, ImageTk
-from config import *
-
-
+from app_utils import *
+from config import userpass, mis, sro, svp, url_salvar
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -12,20 +11,21 @@ class Application(tk.Frame):
         self.master = master
         self.master.title("GCCAP/CTE Benfica")
         self.master.geometry("500x400")
+        self.master.iconbitmap("./icon.ico")
         self.pack(fill="both", expand=True)
         self.create_widgets()
         
 
     def create_widgets(self):
 
-          # Carrega a imagem da logo
-        #image = Image.open("./logo.webp").convert("RGBA")
-        #image = image.resize((300, 100), Image.ANTIALIAS)
-        #self.logo = ImageTk.PhotoImage(image)
+         # Carrega a imagem da logo
+        image = Image.open("./logo.webp").convert("RGBA")
+        image = image.resize((300, 100), Image.ANTIALIAS)
+        self.logo = ImageTk.PhotoImage(image)
 
         # Cria um label para exibir a imagem da logo
-        #self.logo_label = tk.Label(self, image=self.logo, highlightthickness=0)
-        #self.logo_label.grid(row=0, column=2, columnspan=5)
+        self.logo_label = tk.Label(self, image=self.logo, highlightthickness=0)
+        self.logo_label.grid(row=0, column=2, columnspan=5)
 
 
         # Cria um label Titulo
@@ -122,11 +122,11 @@ class Application(tk.Frame):
         for item in selected_ramps:
             if item < 10:
                 item = str(item)
-                item = f'IP00{item}'
+                item = f'00{item}'
                 rampas.append(item)
             else:
                 item = str(item)
-                item = f'IP0{item}'
+                item = f'0{item}'
                 rampas.append(item)
 
         selected_date = self.date_label["text"]
@@ -155,17 +155,13 @@ class Application(tk.Frame):
 
         else:
             # Imprime os valores selecionados
-            print(f"Data selecionada: {selected_date}")
-            print(f"Hora de início: {hora_inicio.strftime('%H:%M:%S')}")
-            print(f"Hora de término: {hora_fim.strftime('%H:%M:%S')}")
-            print(f"Rampas selecionadas: {rampas}")
-            cap_aut(selected_date, hora_inicio, hora_fim, rampas)
-            erro("Aplicação Finalizada")
+            result = cap_aut(selected_date, hora_inicio, hora_fim, rampas, data, mis, url_salvar)
+            if result == True:
+                erro("Aplicação Finalizada\n - Sem objetos com pendência de postagem")
+            else:
+                erro(f"Aplicação Finalizada\n - {result} objetos com pendência de postagem")
+                
             
-
-
-       
-
     def select_date(self):
         # Atualiza o label da data com a data selecionada no calendário
         self.date_label["text"] = f"{self.calendar.selection_get().strftime('%d/%m/%Y')}"
